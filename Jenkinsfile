@@ -10,43 +10,43 @@ pipeline{
                 git 'https://github.com/jahnavi17hm/SPE'
             }
         }
-        stage('Testing'){
-            steps{
-                dir('frontend'){
-                    sh "npm install"
-                    // sh "npm test"
-                }
-            }
-        }
+    //     stage('Testing'){
+    //         steps{
+    //             dir('frontend'){
+    //                 sh "npm install"
+    //                 // sh "npm test"
+    //             }
+    //         }
+    //     }
         
-       stage('Build Frontend Image') {
-            steps {
-                sh 'docker build -t frontend-image ./frontend'
-            }
-        }
-         stage('Build Backend Image') {
-            steps {
-                sh 'docker build -t backend-image ./backend'
-            }
-        }
-        stage('Push Images to DockerHub') {
-            steps {
+    //    stage('Build Frontend Image') {
+    //         steps {
+    //             sh 'docker build -t frontend-image ./frontend'
+    //         }
+    //     }
+    //      stage('Build Backend Image') {
+    //         steps {
+    //             sh 'docker build -t backend-image ./backend'
+    //         }
+    //     }
+    //     stage('Push Images to DockerHub') {
+    //         steps {
 
-                withCredentials([usernamePassword(credentialsId: 'DockerHubCred', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
-                    sh 'docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD'
-                    sh 'docker tag frontend-image jahnavi17hm/frontend-image:latest'
-                    sh 'docker push jahnavi17hm/frontend-image:latest'
-                    sh 'docker tag backend-image jahnavi17hm/backend-image:latest'
-                    sh 'docker push jahnavi17hm/backend-image:latest'
-                }          
-            }
-        }
-        stage('Ansible Deployment') {
-            steps {
-                script { 
-                    sh 'ansible-playbook -i inventory playbook.yml'
-                }
-            }
-        }
+    //             withCredentials([usernamePassword(credentialsId: 'DockerHubCred', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
+    //                 sh 'docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD'
+    //                 sh 'docker tag frontend-image jahnavi17hm/frontend-image:latest'
+    //                 sh 'docker push jahnavi17hm/frontend-image:latest'
+    //                 sh 'docker tag backend-image jahnavi17hm/backend-image:latest'
+    //                 sh 'docker push jahnavi17hm/backend-image:latest'
+    //             }          
+    //         }
+    //     }
+    //     stage('Ansible Deployment') {
+    //         steps {
+    //             script { 
+    //                 sh 'ansible-playbook -i inventory playbook.yml'
+    //             }
+    //         }
+    //     }
     }
 }
