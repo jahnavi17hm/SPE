@@ -24,11 +24,11 @@ pipeline{
                 sh 'docker build -t frontend-image ./frontend'
             }
         }
-    //      stage('Build Backend Image') {
-    //         steps {
-    //             sh 'docker build -t backend-image ./backend'
-    //         }
-    //     }
+         stage('Build Backend Image') {
+            steps {
+                sh 'docker build -t backend-image ./backend'
+            }
+        }
     //     stage('Push Images to DockerHub') {
     //         steps {
 
