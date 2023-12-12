@@ -19,7 +19,7 @@ const authorize = (req, res, next) => {
         if (err) {
             return res.status(200).json({
                 status: 1,
-                error: "Invalid token"
+                error: "Invalid   token"
             })
         }
         req.usertoken = decodedtoken;
