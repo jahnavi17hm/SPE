@@ -15,7 +15,7 @@ const VendorOrder = () => {
     const navigate = useNavigate();
     const [orders, setOrders] = useState([]);
     const reject = async (record) => {
-        let s = await axios.get("/orders/reject/" + record._id);
+        let s = await axios.get(process.env.REACT_APP_BASE_URL +"/orders/reject/" + record._id);
         if (s.data.status === 0) {
             let x = orders;
             for (let i in x) {
@@ -39,7 +39,7 @@ const VendorOrder = () => {
             }
         }
         setOrders(x);
-        let s = await axios.get("/orders/update/" + record._id);
+        let s = await axios.get(process.env.REACT_APP_BASE_URL +"/orders/update/" + record._id);
         if (s.data.status === 0) {
             message.success(s.data.message);
         }
@@ -64,12 +64,12 @@ const VendorOrder = () => {
             message.error("You aren't logged in");
             navigate("/login");
         }
-        let usertoken = await axios.post("/user/info");
+        let usertoken = await axios.post(process.env.REACT_APP_BASE_URL +"/user/info");
         if (!usertoken) {
             message.error("Your token is invalid");
         }
-        let user = await axios.post("/user/profile");
-        let orders = await axios.get("/orders/vendor/" + user.data._id);
+        let user = await axios.post(process.env.REACT_APP_BASE_URL +"/user/profile");
+        let orders = await axios.get(process.env.REACT_APP_BASE_URL +"/orders/vendor/" + user.data._id);
         if (orders.data.status === 1) {
             message.error(orders.data.error);
         }
@@ -78,8 +78,8 @@ const VendorOrder = () => {
             orders.sort((a, b) => Date.parse(b.placed_time) - Date.parse(a.placed_time));
             for (let i in orders) {
                 orders[i].placed_time = moment(orders[i].placed_time).format("MMM Do YY HH:mm");
-                let food = await axios.get("/food/" + orders[i].food);
-                let canteen = await axios.get("/vendor/" + food.data.canteen);
+                let food = await axios.get(process.env.REACT_APP_BASE_URL +"/food/" + orders[i].food);
+                let canteen = await axios.get(process.env.REACT_APP_BASE_URL +"/vendor/" + food.data.canteen);
                 orders[i].food = food.data.item_name;
                 orders[i].canteen = canteen.data.vendor.shop_name;
                 orders[i].toppings = orders[i].toppings.toString();

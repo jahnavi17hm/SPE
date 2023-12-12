@@ -66,16 +66,16 @@ const StatsPage = () => {
             navigate("/login");
         }
         else {
-            let decodedtoken = await axios.post("/user/info");
+            let decodedtoken = await axios.post(process.env.REACT_APP_BASE_URL +"/user/info");
             if (!decodedtoken) navigate("/login");
             if (decodedtoken.data.type === "buyer") {
                 message.error("This page is not for you");
                 navigate("/dashboard");
             }
             setToken();
-            let userData = await axios.post("/user/profile");
+            let userData = await axios.post(process.env.REACT_APP_BASE_URL +"/user/profile");
             userData = userData.data;
-            let y = await axios.get("/vendor/batchwise/" + userData._id);
+            let y = await axios.get(process.env.REACT_APP_BASE_URL +"/vendor/batchwise/" + userData._id);
             setBatchLabels(y.data.labels);
             let colors = []
             for (let i in y.data.labels) {
@@ -85,7 +85,7 @@ const StatsPage = () => {
             }
             setBatchColors(colors);
             setBatchStats(y.data.count);
-            let z = await axios.get("/vendor/agewise/" + userData._id);
+            let z = await axios.get(process.env.REACT_APP_BASE_URL +"/vendor/agewise/" + userData._id);
             colors = []
             for (let i in z.data.labels) {
               let x = dynamicColors();
@@ -95,7 +95,7 @@ const StatsPage = () => {
             setAgeColors(colors);
             setAgeLabels(z.data.labels);
             setAgeStats(z.data.count);
-            let foods = await axios.get("/food/canteen/" + userData._id);
+            let foods = await axios.get(process.env.REACT_APP_BASE_URL +"/food/canteen/" + userData._id);
             foods = foods.data.food;
             let best = []
             for (let i in foods) {
@@ -105,7 +105,7 @@ const StatsPage = () => {
                 best.push(x + ". " + foods[i].item_name + " Times Sold: " + foods[i].times_sold);
             }
             setUserData(userData);
-            let x = await axios.get("/vendor/pending/" + userData._id);
+            let x = await axios.get(process.env.REACT_APP_BASE_URL +"/vendor/pending/" + userData._id);
             setPending(x.data.pending);
             setTop(best);
         }

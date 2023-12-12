@@ -21,20 +21,20 @@ const Wallet = () => {
             navigate("/login");
         }
         else {
-            let decodedtoken = await axios.post("/user/info");
+            let decodedtoken = await axios.post(process.env.REACT_APP_BASE_URL +"/user/info");
             if (!decodedtoken) navigate("/login");
             if (decodedtoken.data.type === "vendor") {
                 message.error("You do not have a wallet!");
                 navigate("/");
             }
             setToken();
-            let userData = await axios.post("/user/profile");
+            let userData = await axios.post(process.env.REACT_APP_BASE_URL +"/user/profile");
             userData = userData.data;
             curr_wallet = userData.wallet;
         }
     }, [update]);
 	const onSubmit = async (event) => {
-		let response = await axios.post('http://localhost:5000/user/wallet/update', event);
+		let response = await axios.post(process.env.REACT_APP_BASE_URL +'http://localhost:5000/user/wallet/update', event);
         if (response.data.status == 1) {
 			message.error(response.data.error);
         }

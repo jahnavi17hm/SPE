@@ -19,11 +19,11 @@ pipeline{
             }
         }
         
-    //    stage('Build Frontend Image') {
-    //         steps {
-    //             sh 'docker build -t frontend-image ./frontend'
-    //         }
-    //     }
+       stage('Build Frontend Image') {
+            steps {
+                sh 'docker build -t frontend-image ./frontend'
+            }
+        }
     //      stage('Build Backend Image') {
     //         steps {
     //             sh 'docker build -t backend-image ./backend'

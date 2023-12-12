@@ -21,7 +21,7 @@ const Login = () => {
 		});
 	}
 	const onSubmit = async (event) => {
-		let response = await axios.post('/auth/login', event); 
+		let response = await axios.post(process.env.REACT_APP_BASE_URL +'/auth/login', event); 
 		if (response.data.status === 1) {
 			let err = response.data.error
 			message.error(err);
@@ -39,7 +39,7 @@ const Login = () => {
 	}
 	const handleGoogle = async (data) => {
 		let j = {token: data.tokenId};
-		let response = await axios.post("/auth/google", j);
+		let response = await axios.post(process.env.REACT_APP_BASE_URL +"/auth/google", j);
 		if (response.data.status === 1) {
 			let err = response.data.error
 			message.error(err);

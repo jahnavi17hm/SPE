@@ -32,10 +32,11 @@ const VendorDashboard = () => {
     const [update, setUpdate] = useState("");
     const [currfood, setFood] = useState("");
     useEffect(async() => {
-        let decodedtoken = await axios.post("/user/info");
-        let vendor = await axios.post("/user/profile");
+        let decodedtoken = await axios.post(process.env.REACT_APP_BASE_URL +"/user/info");
+        let vendor = await axios.post(process.env.REACT_APP_BASE_URL +"/user/profile");
         setVendorId(vendor.data._id);
-        let response = await axios.get('/food/canteen/' + vendor.data._id);
+        let response = await axios.get(process.env.REACT_APP_BASE_URL +
+            '/food/canteen/' + vendor.data._id);
         if (response.data.status === 1) {
             message.error(response.data.error);
         }
@@ -47,7 +48,7 @@ const VendorDashboard = () => {
         let result = {...values, canteen: vendorid};
         if (!result.toppings) result = {...result, toppings: []}
         if (!result.tags) result = {...result, tags: []}
-        let response = await axios.post("/food/register", result);
+        let response = await axios.post(process.env.REACT_APP_BASE_URL +"/food/register", result);
         if (response.data.status === 1) {
             message.error(response.data.error);
         }
@@ -111,7 +112,7 @@ const VendorDashboard = () => {
         }
     ];
     const updateFood = async (values) => {
-        let response = await axios.post("/food/update/" + currfood._id, values);
+        let response = await axios.post(process.env.REACT_APP_BASE_URL +"/food/update/" + currfood._id, values);
         if (response.data.status === 1) {
             message.error(response.data.error);
         }

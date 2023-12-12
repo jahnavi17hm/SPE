@@ -27,11 +27,11 @@ const Profile = () => {
             navigate("/login");
         }
         else {
-            let decodedtoken = await axios.post("/user/info");
+            let decodedtoken = await axios.post(process.env.REACT_APP_BASE_URL +"/user/info");
             if (!decodedtoken) navigate("/login");
             setUserType(decodedtoken.data.type);
             setToken();
-            let userData = await axios.post("/user/profile");
+            let userData = await axios.post(process.env.REACT_APP_BASE_URL +"/user/profile");
             userData = userData.data;
             setOldEmail(userData.email);
             form.setFieldsValue({
@@ -72,7 +72,7 @@ const Profile = () => {
 	}
 	const onSubmit = async (event) => {
         let r = {...event, old_email: old_email, type: usertype, old_shop_name: old_shop_name};
-		let response = await axios.post('http://localhost:5000/user/update', r);
+		let response = await axios.post(process.env.REACT_APP_BASE_URL +'http://localhost:5000/user/update', r);
         if (response.data.status == 1) {
 			message.error(response.data.error);
         }
