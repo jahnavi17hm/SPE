@@ -31,7 +31,7 @@ const Dashboard = () => {
             message.error("You aren't logged in");
             navigate("/login");
         }
-        let user = await axios.post("/user/info");
+        let user = await axios.post(process.env.REACT_APP_BASE_URL +"/user/info");
         if (!user) {
             message.error("Your token is invalid");
         }

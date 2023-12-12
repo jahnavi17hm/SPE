@@ -10,14 +10,14 @@ pipeline{
                 git 'https://github.com/jahnavi17hm/SPE'
             }
         }
-    //     stage('Testing'){
-    //         steps{
-    //             dir('frontend'){
-    //                 sh "npm install"
-    //                 // sh "npm test"
-    //             }
-    //         }
-    //     }
+        stage('Testing'){
+            steps{
+                dir('frontend'){
+                    sh "npm install"
+                    // sh "npm test"
+                }
+            }
+        }
         
     //    stage('Build Frontend Image') {
     //         steps {

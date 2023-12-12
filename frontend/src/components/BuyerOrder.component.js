@@ -25,7 +25,7 @@ const BuyerOrder= () => {
     }    
     const ratingUpdate = async (params, record) => {
         let t = {rating: params};
-        let a = await axios.post("/orders/update/rating/" + record._id, t);
+        let a = await axios.post(process.env.REACT_APP_BASE_URL +"/orders/update/rating/" + record._id, t);
         if (a.data.status === 1) message.error(a.data.error);
         else {
             message.success("Rating successfully updated");
@@ -55,14 +55,14 @@ const BuyerOrder= () => {
             message.error("You aren't logged in");
             navigate("/login");
         }
-        let usertoken = await axios.post("/user/info");
+        let usertoken = await axios.post(process.env.REACT_APP_BASE_URL +"/user/info");
         if (!usertoken) {
             message.error("Your token is invalid");
             navigate("/login");
         }
-        let user = await axios.post("/user/profile");
+        let user = await axios.post(process.env.REACT_APP_BASE_URL +"/user/profile");
         user = user.data;
-        let orders = await axios.get("/orders/buyer/" + user._id);
+        let orders = await axios.get(process.env.REACT_APP_BASE_URL +"/orders/buyer/" + user._id);
         if (orders.data.status === 1) {
             message.error(orders.data.error);
         }
@@ -71,8 +71,8 @@ const BuyerOrder= () => {
             orders.sort((a, b) => Date.parse(b.placed_time) - Date.parse(a.placed_time));
             for (let i in orders) {
                 orders[i].placed_time = moment(orders[i].placed_time).format("MMM Do YY HH:mm");
-                let food = await axios.get("/food/" + orders[i].food);
-                let canteen = await axios.get("/vendor/" + food.data.canteen);
+                let food = await axios.get(process.env.REACT_APP_BASE_URL +"/food/" + orders[i].food);
+                let canteen = await axios.get(process.env.REACT_APP_BASE_URL +"/vendor/" + food.data.canteen);
                 orders[i].food = food.data.item_name;
                 orders[i].canteen = canteen.data.vendor.shop_name;
             }

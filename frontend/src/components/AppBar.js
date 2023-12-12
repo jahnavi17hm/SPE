@@ -40,10 +40,10 @@ const ResponsiveAppBar = () => {
   useEffect(async() =>{
     let error = setToken();
     if (error !== 1) {
-      let decodedtoken = await axios.post("/user/info");
+      let decodedtoken = await axios.post(process.env.REACT_APP_BASE_URL +"/user/info");
       setUserType(decodedtoken.data.type);
       setToken();
-      let profile = await axios.post("/user/profile")
+      let profile = await axios.post(process.env.REACT_APP_BASE_URL +"/user/profile")
       if (decodedtoken.data.type === "buyer") 
         setWallet(profile.data.wallet);
     }

@@ -99,16 +99,16 @@ const FavoritesDashboard = () => {
             setFavoriteJson(favouritesJSON);
             setBuyerFavouriteItems(favourites)
         }
-        let response = await axios.post("/buyer/favorite/" + record._id);
+        let response = await axios.post(process.env.REACT_APP_BASE_URL +"/buyer/favorite/" + record._id);
         if (response.data.status === 1) {
             message.error(response.data.error);
         }
     }
     useEffect(async() => {
         let err = setToken(); 
-        let profile = await axios.post("/user/profile");
+        let profile = await axios.post(process.env.REACT_APP_BASE_URL +"/user/profile");
         setBuyer(profile.data._id); 
-        let foodarray = await axios.get("/food");
+        let foodarray = await axios.get(process.env.REACT_APP_BASE_URL +"/food");
         if (foodarray.data.status === 1) {
             message.error(foodarray.data.error);
         }
@@ -124,13 +124,13 @@ const FavoritesDashboard = () => {
         let tagset = []
         for (let i in foodarray) {
             const food = foodarray[i];
-            let vendor = await axios.get("/vendor/" + food.canteen);
+            let vendor = await axios.get(process.env.REACT_APP_BASE_URL +"/vendor/" + food.canteen);
             if(!Object.keys(vendorList).includes(vendor.data.vendor.shop_name)){
                 vendorList[vendor.data.vendor.shop_name] = vendor.data.vendor;
             }
             let updated = food;
             updated.canteen = vendor.data.vendor.shop_name;
-            let q = await axios.get("/food/rate/" + food._id);
+            let q = await axios.get(process.env.REACT_APP_BASE_URL +"/food/rate/" + food._id);
             updated.rating = q.data;
             temp.push(updated);
             let filter = {text: updated.canteen, value: updated.canteen};
@@ -155,13 +155,13 @@ const FavoritesDashboard = () => {
             }
         }
         setToken();
-        let userData = await axios.post("/user/profile");
+        let userData = await axios.post(process.env.REACT_APP_BASE_URL +"/user/profile");
         userData = userData.data;
         setBuyerFavouriteItems(userData.favorites);
         let x = [];
         for (let i in userData.favorites) {
             let y = userData.favorites[i];
-            let z = await axios.get("/food/" + y);
+            let z = await axios.get(process.env.REACT_APP_BASE_URL +"/food/" + y);
             x.push(z.data);
         }
         setFavoriteJson(x); 
@@ -198,7 +198,7 @@ const FavoritesDashboard = () => {
     }
     const submit = async (values) => {
         const x = {wallet: - quantity * basecost};
-        let response = await axios.post("/user/wallet/update", x);
+        let response = await axios.post(process.env.REACT_APP_BASE_URL +"/user/wallet/update", x);
         if (response.data.status === 1) {
             message.error(response.data.error);
         }
@@ -216,7 +216,7 @@ const FavoritesDashboard = () => {
                 cost,
                 toppings
             }
-            let response = await axios.post("/orders/register", j);
+            let response = await axios.post(process.env.REACT_APP_BASE_URL +"/orders/register", j);
             if (response.data.status === 1) {
                 message.error(response.data.error);
             }
