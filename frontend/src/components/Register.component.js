@@ -31,7 +31,7 @@ const Register = () => {
 		setUserType(props.target.value);
 	}
 	const onSubmit = async (event) => {
-		let response = await axios.post(process.env.REACT_APP_BASE_URL +'http://localhost:5000/auth/register', event);
+		let response = await axios.post('http://localhost:5000/auth/register', event);
 		if (response.data.status === 1) {
 			message.error(response.data.error);
 		}
