@@ -123,11 +123,11 @@ const Profile = () => {
 			<BuyerInput>
 				<Form.Item label="Batch" required name="batch_name" rules={[{required: true, message: "Select your batch!"}]}>
 						<Select placeholder="Batch" disabled={editlock}>
-						<Select.Option value="UG1">UG1</Select.Option>
-						<Select.Option value="UG2">UG2</Select.Option>
-						<Select.Option value="UG3">UG3</Select.Option>
-						<Select.Option value="UG4">UG4</Select.Option>
-						<Select.Option value="UG5">UG5</Select.Option>
+						<Select.Option value="2020">2020</Select.Option>
+						<Select.Option value="2021">2021</Select.Option>
+						<Select.Option value="2022">2022</Select.Option>
+						<Select.Option value="2023">2023</Select.Option>
+						<Select.Option value="2024">2024</Select.Option>
 						</Select>
 				</Form.Item>
 				<Form.Item label="Age" required name="age" 
